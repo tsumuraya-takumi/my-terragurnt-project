@@ -1,3 +1,9 @@
+
+locals {
+  aws_region = "ap-northeast-1"
+  project_name = "my-terragrunt-project"
+}
+
 remote_state {
   backend = "s3"
 
@@ -14,4 +20,43 @@ remote_state {
     path      = "backend.tf"
     if_exists = "overwrite_terragrunt"
   }
+}
+
+generate "provider" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+
+  contents = <<EOF
+provider "aws" {
+  region = "${local.aws_region}"
+
+  default_tags {
+    tags = {
+      project = "${local.project_name}"
+    }
+  }
+}
+EOF
+}
+
+generate "versions" {
+  path      = "versions.tf"
+  if_exists = "overwrite_terragrunt"
+
+  contents = <<EOF
+terraform {
+  required_version = "~> 1.15.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+}
+EOF
+}
+
+inputs = {
+  project_name = local.project_name
 }
