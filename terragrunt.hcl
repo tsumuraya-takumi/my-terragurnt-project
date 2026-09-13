@@ -8,7 +8,7 @@ remote_state {
   backend = "s3"
 
   config = {
-    bucket = "terraform-state-key"
+    bucket = "terraform-state-tsumuraya"
     key = "${path_relative_to_include()}/terraform.tfstate"
     region = "ap-northeast-1"
     encrypt = true
@@ -55,8 +55,4 @@ terraform {
   }
 }
 EOF
-}
-
-inputs = {
-  project_name = local.project_name
 }
