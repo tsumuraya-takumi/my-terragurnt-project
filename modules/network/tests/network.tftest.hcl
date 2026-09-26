@@ -7,6 +7,7 @@ variables {
   project_name = "my-terragrunt-project"
 }
 
+# Cidrブロックの確認
 run "vpc_has_correct_cidr" {
   command = plan
 
@@ -16,6 +17,8 @@ run "vpc_has_correct_cidr" {
   }
 }
 
+
+# AWSタグの確認
 run "vpc_output_has_correct_tags" {
   command = plan
 
