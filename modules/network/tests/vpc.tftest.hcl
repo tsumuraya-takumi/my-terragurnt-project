@@ -1,11 +1,12 @@
+# ------------------------
+# VPC
+# ------------------------
+
 mock_provider "aws" {
   override_during = plan
 }
 
-variables {
-  environment  = "development"
-  project_name = "my-terragrunt-project"
-}
+# VPCのCidrブロックの確認
 
 run "vpc_has_correct_cidr" {
   command = plan
@@ -16,6 +17,7 @@ run "vpc_has_correct_cidr" {
   }
 }
 
+# VPCタグの確認
 run "vpc_output_has_correct_tags" {
   command = plan
 
@@ -28,6 +30,4 @@ run "vpc_output_has_correct_tags" {
     condition     = aws_vpc.vpc.tags.Env == "development"
     error_message = "環境がdevelopmentではありません"
   }
-
-  # projectタグの検証はここでは行わない（Terragrunt側の責務のため）
 }
