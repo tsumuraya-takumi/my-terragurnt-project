@@ -32,7 +32,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      project = "${local.project_name}"
+      Project = "${local.project_name}"
     }
   }
 }
